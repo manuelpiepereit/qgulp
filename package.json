@@ -1,0 +1,29 @@
+{
+	"name": "qgulp",
+	"description": "A gulp based build process for wordpress",
+	"version": "0.0.1-alpha.0",
+	"author": "Neonpastell GmbH <multimedia@neonpastell.com> (http://www.neonpastell.com/)",
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/manuelpiepereit/qgulp.git"
+	},
+	"main": "index.js",
+	"bin": {
+		"qgulp": "./cli.js"
+	},
+	"scripts": {
+		"start": "gulp"
+	},
+	"dependencies": {
+		"@babel/core": "^7.1.6",
+		"@babel/preset-env": "^7.1.6",
+		"@babel/register": "^7.0.0",
+		"app-root-dir": "^1.0.2",
+		"execa": "^1.0.0",
+		"gulp": "^4.0.0",
+		"gulp-babel": "^8.0.0",
+		"ora": "^3.0.0"
+	},
+	"devDependencies": {}
+}

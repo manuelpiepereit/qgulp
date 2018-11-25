@@ -1,0 +1,14 @@
+{
+	"name": "my-new-projekt",
+	"description": "project description",
+	"version": "0.0.1",
+	"author": "Neonpastell GmbH <multimedia@neonpastell.com> (http://www.neonpastell.com/)",
+	"license": "MIT",
+	"scripts": {
+		"start": "gulp"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"qgulp": "0.0.1-alpha.0"
+	}
+}

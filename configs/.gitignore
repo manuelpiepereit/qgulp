@@ -1,0 +1,36 @@
+# os
+.DS_Store*
+Thumbs.db
+._*
+
+# packages
+*.7z
+*.dmg
+*.gz
+*.bz2
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# npm, sass, gulp, bower, composer
+node_modules
+bower_components
+**/.sass-cache
+**/.sass-cache/*
+*.scssc
+*.map
+
+# logs and db
+*.log
+*.sql
+*.env
+
+# project files
+/www/readme.html
+/www/wp-config-local.php
+/www/cms/
+/www/media/
+/www/public/cache/
+/www/public/uploads/
