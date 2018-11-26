@@ -1,7 +1,7 @@
 {
 	"name": "qgulp",
 	"description": "A gulp based build process for wordpress",
-	"version": "0.0.1-alpha.0",
+	"version": "0.0.1-alpha.1",
 	"author": "Neonpastell GmbH <multimedia@neonpastell.com> (http://www.neonpastell.com/)",
 	"license": "MIT",
 	"repository": {
@@ -20,10 +20,31 @@
 		"@babel/preset-env": "^7.1.6",
 		"@babel/register": "^7.0.0",
 		"app-root-dir": "^1.0.2",
+		"autoprefixer": "^9.3.1",
+		"browser-sync": "^2.26.3",
+		"change-case": "^3.0.2",
+		"cssnano": "^4.1.7",
+		"dateformat": "^3.0.3",
+		"del": "^3.0.0",
 		"execa": "^1.0.0",
 		"gulp": "^4.0.0",
 		"gulp-babel": "^8.0.0",
-		"ora": "^3.0.0"
+		"gulp-bump": "^3.1.1",
+		"gulp-concat": "^2.6.1",
+		"gulp-filter": "^5.1.0",
+		"gulp-header": "^2.0.5",
+		"gulp-imagemin": "^5.0.3",
+		"gulp-livereload": "^4.0.0",
+		"gulp-notify": "^3.2.0",
+		"gulp-plumber": "^1.2.0",
+		"gulp-postcss": "^8.0.0",
+		"gulp-rename": "^1.4.0",
+		"gulp-sass": "^4.0.1",
+		"gulp-sourcemaps": "^2.6.4",
+		"gulp-uglify": "^3.0.1",
+		"imagemin-pngquant": "^6.0.0",
+		"ora": "^3.0.0",
+		"replace": "^1.0.0"
 	},
 	"devDependencies": {}
 }

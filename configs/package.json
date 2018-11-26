@@ -9,6 +9,6 @@
 	},
 	"dependencies": {},
 	"devDependencies": {
-		"qgulp": "0.0.1-alpha.0"
+		"qgulp": "0.0.1-alpha.1"
 	}
 }
