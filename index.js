@@ -4,7 +4,7 @@ const tools = require('./tasks/tools');
 
 // tasks
 const styles = require('./tasks/task-styles');
-const stylesWP = require('./tasks/task-styles-wp');
+// const stylesWP = require('./tasks/task-styles-wp');
 const scripts = require('./tasks/task-scripts');
 const images = require('./tasks/task-images');
 const clear = require('./tasks/task-clear');
@@ -34,7 +34,7 @@ const qgulp = gulp => {
 	gulp.task('clear', clear(gulp, config));
 	gulp.task('copy', copy(gulp, config));
 	gulp.task('ftp', ftp(gulp, config));
-	gulp.task('css:wp', stylesWP(gulp, config, pkg));
+	// gulp.task('css:wp', stylesWP(gulp, config, pkg));
 
 	// watcher tasks
 	gulp.task('watch:livereload', livereload(gulp, config));
@@ -42,8 +42,8 @@ const qgulp = gulp => {
 	gulp.task('watch', gulp.series('watch:' + tools.getDefaultWatcher(config)));
 
 	// build tasks
-	gulp.task('dev', gulp.series('clear', gulp.parallel('css:wp', 'css', 'js', 'images', 'copy'))); // build development files
-	gulp.task('dist', gulp.series('clear', gulp.parallel('css:wp', 'css:build', 'js:build', 'images', 'copy'))); // build distribution files
+	gulp.task('dev', gulp.series('clear', gulp.parallel('css', 'js', 'images', 'copy'))); // build development files
+	gulp.task('dist', gulp.series('clear', gulp.parallel('css:build', 'js:build', 'images', 'copy'))); // build distribution files
 	gulp.task('build', gulp.series('dist')); // alias for dist
 
 	// version bumps
