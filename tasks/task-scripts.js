@@ -1,3 +1,11 @@
+/**
+ * task: scripts
+ * concats and minifies js, writes sourcemaps
+ *
+ * @package QGulp
+ * @version 0.1.0
+ */
+
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 const header = require('gulp-header');
@@ -16,11 +24,6 @@ const errorHandler = r => {
 	notify.onError('ERROR: <%= error.message %>')(r);
 };
 
-/**
- * task: styles
- *
- * compiles sass, prefix, sourcempas, minifies
- */
 module.exports = function(gulp, config, banner, useMinOnlyOnBuild) {
 	return () => {
 		let src = config.paths.srcJS;

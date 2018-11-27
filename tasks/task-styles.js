@@ -1,3 +1,11 @@
+/**
+ * task: styles
+ * compiles sass, prefix, sourcempas, minifies
+ *
+ * @package QGulp
+ * @version 0.1.0
+ */
+
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 const header = require('gulp-header');
@@ -6,7 +14,6 @@ const rename = require('gulp-rename');
 const livereload = require('gulp-livereload');
 
 // plugins for styles
-// @note sync and watch https://www.npmjs.com/package/gulp-sass
 const sass = require('gulp-sass');
 const sourcemaps = require('gulp-sourcemaps');
 const postcss = require('gulp-postcss');
@@ -18,11 +25,6 @@ const errorHandler = r => {
 	notify.onError('ERROR: <%= error.message %>')(r);
 };
 
-/**
- * task: styles
- *
- * compiles sass, prefix, sourcempas, minifies
- */
 module.exports = function(gulp, config, banner, useMinOnlyOnBuild) {
 	return () => {
 		let src = config.paths.srcCSS;
@@ -45,7 +47,14 @@ const both = function(gulp, config, banner, src, dest, postcssPlugins, postcssPl
 		.src(src, { allowEmpty: true })
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(sass({ errLogToConsole: true, outputStyle: config.cssOutputStyle, precision: config.cssPrecistion }))
+		.pipe(
+			sass({
+				includePaths: ['node_modules'],
+				errLogToConsole: true,
+				outputStyle: config.cssOutputStyle,
+				precision: config.cssPrecistion,
+			})
+		)
 		.on('error', sass.logError)
 		.pipe(postcss(postcssPlugins))
 		.pipe(header(banner))

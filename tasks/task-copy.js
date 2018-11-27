@@ -1,7 +1,9 @@
 /**
  * task: copy
- *
  * copies files without further processing
+ *
+ * @package QGulp
+ * @version 0.1.0
  */
 module.exports = function(gulp, config) {
 	return done => {

@@ -1,3 +1,11 @@
+/**
+ * task: images
+ * minifies and optimizes images anc svgs
+ *
+ * @package QGulp
+ * @version 0.1.0
+ */
+
 const plumber = require('gulp-plumber');
 const notify = require('gulp-notify');
 const rename = require('gulp-rename');
@@ -12,11 +20,6 @@ const errorHandler = r => {
 	notify.onError('ERROR: <%= error.message %>')(r);
 };
 
-/**
- * task: images
- *
- * minifies and optimizes png, jpeg, gifs
- */
 module.exports = function(gulp, config) {
 	return () => {
 		let src = config.paths.srcIMG;

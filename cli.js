@@ -1,6 +1,9 @@
 #!/usr/bin/env node
+
 /**
  * Main installer file for QGulp
+ * @package QGulp
+ * @version 0.1.0
  */
 
 'use strict';

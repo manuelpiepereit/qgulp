@@ -1,10 +1,13 @@
-const del = require('del');
-
 /**
  * task: clear
- *
  * removes distribution folder
+ *
+ * @package QGulp
+ * @version 0.1.0
  */
+
+const del = require('del');
+
 module.exports = function(gulp, config) {
 	return () => {
 		let dest = config.paths.dest;

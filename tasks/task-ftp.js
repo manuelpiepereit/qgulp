@@ -1,10 +1,12 @@
-// const bump = require('gulp-bump');
-
 /**
- * task: bump, bump:patch, bump:minor, bump:major
+ * task: deploy
+ * delpoys files via ftp
  *
- * bumps version in config file
+ * @package QGulp
+ * @version 0.1.0
+ * @todo to implement
  */
+
 module.exports = function(gulp, config) {
 	return () => {
 		return new Promise(function(resolve, reject) {

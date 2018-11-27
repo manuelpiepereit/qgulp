@@ -1,11 +1,14 @@
+/**
+ * Some helper functions
+ *
+ * @package QGulp
+ * @version 0.1.0
+ */
+
 const dateformat = require('dateformat');
 const changeCase = require('change-case');
 
 module.exports = {
-	foo: function() {
-		return 'say FOOO';
-	},
-
 	// creates a banner string for a file header
 	banner: (config, pkg) => {
 		return [
@@ -33,12 +36,4 @@ module.exports = {
 	getBuildMode: config => {
 		return config.useMinOnlyOnBuild;
 	},
-
-	// check if file exists
-	// fileExists: file => {
-	// 	return true;
-	// },
 };
-
-// private functions
-// var bar = function() {};

@@ -1,10 +1,13 @@
-const browserSync = require('browser-sync').create();
-
 /**
  * task: watch
+ * watches scss, js and php files using browsersync
  *
- * watches scss, js and php files
+ * @package QGulp
+ * @version 0.1.0
  */
+
+const browserSync = require('browser-sync').create();
+
 module.exports = function(gulp, config) {
 	const bsInit = done => {
 		browserSync.init(config.browserSync);

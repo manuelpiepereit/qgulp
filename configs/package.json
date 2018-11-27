@@ -1,14 +1,18 @@
 {
-	"name": "my-new-projekt",
-	"description": "project description",
-	"version": "0.0.1",
-	"author": "Neonpastell GmbH <multimedia@neonpastell.com> (http://www.neonpastell.com/)",
-	"license": "MIT",
-	"scripts": {
-		"start": "gulp"
-	},
-	"dependencies": {},
-	"devDependencies": {
-		"qgulp": "0.0.1-alpha.1"
-	}
+  "name": "my-new-projekt",
+  "description": "project description",
+  "version": "0.1.0",
+  "author": "Neonpastell GmbH <info@neonpastell.de> (http://www.neonpastell.com/)",
+  "license": "MIT",
+  "scripts": {
+    "start": "gulp",
+    "serve": "gulp watch",
+    "dev": "gulp dev",
+    "dist": "gulp dist",
+    "build": "gulp build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "qgulp": "latest"
+  }
 }

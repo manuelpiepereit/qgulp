@@ -1,5 +1,8 @@
 /**
- * Installs QGulp
+ * Installs QGulp via npx
+ *
+ * @package QGulp
+ * @version 0.1.0
  */
 const fs = require('fs');
 const cwd = process.cwd();
@@ -7,7 +10,7 @@ const ora = require('ora');
 const execa = require('execa');
 
 module.exports = () => {
-	console.log('\n\n\x1b[1m\x1b[33m%s\x1b[0m\x1b[0m\n', '---- Starting qgulp --------');
+	console.log('\n\n\x1b[1m\x1b[33m%s\x1b[0m\x1b[0m\n', '---- Starting qgulp installer --------');
 	const spinner = ora({ text: '' });
 
 	// define config files for download
@@ -17,8 +20,6 @@ module.exports = () => {
 		'.eslintignore',
 		'.eslintrc.js',
 		'.gitignore',
-		'.prettierrc',
-		'.qgulprc-ftp.js',
 		'.qgulprc.js',
 		'gulpfile.babel.js',
 		'package.json',

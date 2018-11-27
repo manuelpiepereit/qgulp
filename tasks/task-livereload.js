@@ -1,10 +1,13 @@
-const livereload = require('gulp-livereload');
-
 /**
  * task: watch
+ * watches scss, js and php files using livereload
  *
- * watches scss, js and php files
+ * @package QGulp
+ * @version 0.1.0
  */
+
+const livereload = require('gulp-livereload');
+
 module.exports = function(gulp, config) {
 	const reload = done => {
 		livereload.reload();

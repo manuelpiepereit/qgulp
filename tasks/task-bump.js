@@ -1,10 +1,13 @@
-const bump = require('gulp-bump');
-
 /**
  * task: bump, bump:patch, bump:minor, bump:major
+ * bumps version in file
  *
- * bumps version in config file
+ * @package QGulp
+ * @version 0.1.0
  */
+
+const bump = require('gulp-bump');
+
 module.exports = function(gulp, config, type) {
 	return () => {
 		return gulp
