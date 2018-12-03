@@ -3,16 +3,20 @@
  * copies files without further processing
  *
  * @package QGulp
- * @version 0.1.0
+ * @version 0.2.0
  */
+
+const tools = require('./tools');
+
 module.exports = function(gulp, config) {
 	return done => {
-		let src = config.paths.srcCOPY;
-		let dest = config.paths.destCOPY;
+		let dirs = config.paths.copy;
 
-		for (let index in src) {
-			gulp.src(src[index], { allowEmpty: true }).pipe(gulp.dest(dest[index]));
-		}
+		Object.keys(dirs).map(function(key, index) {
+			var src = dirs[key];
+			let dest = key;
+			gulp.src(src, { allowEmpty: true }).pipe(gulp.dest(dest));
+		});
 
 		done();
 	};

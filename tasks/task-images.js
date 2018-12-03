@@ -3,7 +3,7 @@
  * minifies and optimizes images anc svgs
  *
  * @package QGulp
- * @version 0.1.0
+ * @version 0.2.0
  */
 
 const plumber = require('gulp-plumber');
@@ -22,8 +22,8 @@ const errorHandler = r => {
 
 module.exports = function(gulp, config) {
 	return () => {
-		let src = config.paths.srcIMG;
-		let dest = config.paths.destIMG;
+		let dest = config.paths.dist + '/img';
+		let src = config.paths.images;
 
 		return gulp
 			.src(src)
@@ -37,11 +37,7 @@ module.exports = function(gulp, config) {
 				])
 			)
 			.pipe(imagemin(pngquant()))
-			.pipe(
-				rename(function(path) {
-					tools.sanitizeFilename(path);
-				})
-			)
+			.pipe(rename(path => tools.sanitizeFilename(path)))
 			.pipe(gulp.dest(dest))
 			.pipe(notify({ message: 'images ready', onLast: true }));
 	};

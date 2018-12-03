@@ -3,7 +3,7 @@
  * concats and minifies js, writes sourcemaps
  *
  * @package QGulp
- * @version 0.1.0
+ * @version 0.2.0
  */
 
 const plumber = require('gulp-plumber');
@@ -26,8 +26,8 @@ const errorHandler = r => {
 
 module.exports = function(gulp, config, banner, useMinOnlyOnBuild) {
 	return () => {
-		let src = config.paths.srcJS;
-		let dest = config.paths.destJS;
+		let dest = config.paths.dist + '/js';
+		let src = config.paths.js;
 
 		if (useMinOnlyOnBuild) {
 			return distOnly(gulp, config, banner, src, dest);
@@ -40,7 +40,7 @@ module.exports = function(gulp, config, banner, useMinOnlyOnBuild) {
 // writes js and sourcemap files and a seperate *.min.js file
 const both = function(gulp, config, banner, src, dest) {
 	return gulp
-		.src(src, { since: gulp.lastRun('js') })
+		.src(src)
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(babel({ presets: [['@babel/preset-env', { targets: { browsers: config.browserList } }]] }))
@@ -60,7 +60,7 @@ const both = function(gulp, config, banner, src, dest) {
 // writes js and sourcemap files
 const dev = function(gulp, config, banner, src, dest) {
 	return gulp
-		.src(src, { since: gulp.lastRun('js') })
+		.src(src)
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init({ loadMaps: true }))
 		.pipe(babel({ presets: [['@babel/preset-env', { targets: { browsers: config.browserList } }]] }))
@@ -75,7 +75,7 @@ const dev = function(gulp, config, banner, src, dest) {
 // writes uglified js file
 const distOnly = function(gulp, config, banner, src, dest) {
 	return gulp
-		.src(src, { since: gulp.lastRun('js') })
+		.src(src)
 		.pipe(plumber(errorHandler))
 		.pipe(babel({ presets: [['@babel/preset-env', { targets: { browsers: config.browserList } }]] }))
 		.pipe(concat(config.jsDistFilename))

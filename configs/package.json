@@ -9,7 +9,8 @@
     "serve": "gulp watch",
     "dev": "gulp dev",
     "dist": "gulp dist",
-    "build": "gulp build"
+    "build": "gulp build",
+    "deploy": "gulp ftp --production"
   },
   "dependencies": {},
   "devDependencies": {

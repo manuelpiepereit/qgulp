@@ -2,11 +2,10 @@
  * Defines Gulp tasks
  *
  * @package QGulp
- * @version 0.1.0
+ * @version 0.2.0
  */
 
 const AppRootDir = require('app-root-dir').get();
-
 const tools = require('./tasks/tools');
 
 // tasks
@@ -19,18 +18,24 @@ const bump = require('./tasks/task-bump');
 const livereload = require('./tasks/task-livereload');
 const browsersync = require('./tasks/task-browsersync');
 const copy = require('./tasks/task-copy');
+const copyVendor = require('./tasks/task-copy-vendor');
 const ftp = require('./tasks/task-ftp');
 
-// get config files and set some vars
+// get config files
 const pkg = require(AppRootDir + '/package.json');
-const config = require(AppRootDir + '/.qgulprc.js');
+const config = require(AppRootDir + '/gulprc.js');
+const configFTP = require(AppRootDir + '/gulprc-ftp.js');
 
 // main function
 const qgulp = gulp => {
-	if (!gulp) return false; // needs require(qgulp)(gulp);
+	if (!gulp) return false;
 
 	// start workflow
-	console.log('\n\n\x1b[1m\x1b[33m%s\x1b[0m\x1b[0m\n', ' ---------- starting qgulp workflow ---------- ');
+	console.log(
+		'\n\n\n \x1b[33m ---------- starting qgulp workflow for \x1b[1m%s\x1b[0m\x1b[33m v%s ---------- \x1b[0m\n\n',
+		pkg.name,
+		pkg.version
+	);
 
 	// define tasks
 	gulp.task('css', styles(gulp, config, tools.banner(config, pkg), false));
@@ -40,8 +45,12 @@ const qgulp = gulp => {
 	gulp.task('images', images(gulp, config));
 	gulp.task('clear', clear(gulp, config));
 	gulp.task('copy', copy(gulp, config));
-	gulp.task('ftp', ftp(gulp, config));
 	gulp.task('css:wp', stylesWP(gulp, config, pkg));
+	gulp.task('copy-vendor', copyVendor(gulp, config));
+	gulp.task('ftp', ftp(gulp, config, configFTP, 'default'));
+	Object.keys(config.deploy).map(function(key, index) {
+		gulp.task('ftp:' + key, ftp(gulp, config, configFTP, key));
+	});
 
 	// watcher tasks
 	gulp.task('watch:livereload', livereload(gulp, config));

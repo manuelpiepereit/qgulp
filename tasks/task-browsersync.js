@@ -3,7 +3,7 @@
  * watches scss, js and php files using browsersync
  *
  * @package QGulp
- * @version 0.1.0
+ * @version 0.1.1
  */
 
 const browserSync = require('browser-sync').create();
@@ -20,9 +20,10 @@ module.exports = function(gulp, config) {
 	};
 
 	return gulp.parallel(bsInit, () => {
-		gulp.watch(config.paths.watchCSS, gulp.series('css', bsReload));
-		gulp.watch(config.paths.watchJS, gulp.series('js', bsReload));
-		gulp.watch(config.paths.watchPHP, bsReload);
+		gulp.watch(config.watch.css, gulp.series('css', bsReload));
+		gulp.watch(config.watch.js, gulp.series('js', bsReload));
+		gulp.watch(config.watch.php, bsReload);
+		gulp.watch(config.watch.images, gulp.series('images', bsReload));
 		console.log('\n\x1b[33m :: watching with browsersync... \x1b[0m\n');
 	});
 };

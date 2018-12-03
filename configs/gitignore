@@ -27,6 +27,12 @@ bower_components
 *.sql
 *.env
 
+# qgulp-files
+gulprc-ftp-sample.js
+gulprc-ftp.js
+gulprc-sample.js
+
+
 # project files
 /www/readme.html
 /www/wp-config-local.php

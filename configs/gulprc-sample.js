@@ -2,7 +2,7 @@
  * The main QGulp config file
  *
  * @package QGulp
- * @version 0.10
+ * @version 0.2.0
  *
  * main tasks
  * 1. gulp
@@ -13,42 +13,41 @@
 module.exports = {
 	// project options
 	title: 'My Project Title',
-	copyright: '(c) 2018 Neonpastell GmbH',
+	copyright: '(c) 2018 Neonpastell GmbH (https://www.neonpastell.de)',
 
 	// paths
 	paths: {
-		// sources
-		src: './public/_src/',
-		srcCSS: './public/_src/scss/*.scss',
-		srcJS: [
+		// distribution folder
+		dist: './public/assets/',
+
+		// source files
+		css: './public/_src/scss/*.scss',
+		js: [
 			'./public/_src/js/vendor/*.js',
 			'!./public/_src/js/vendor/_*.js',
 			'./public/_src/js/*.js',
 			'!./public/_src/js/_*.js',
 		],
-		srcIMG: './public/_src/img/**',
-		srcCOPY: ['./public/_src/fonts/**/*'], // copy array of folders
-
-		// destinations
-		dest: './public/assets/',
-		destCSS: './public/assets/css/',
-		destJS: './public/assets/js/',
-		destIMG: './public/assets/img/',
-		destCOPY: ['./public/assets/fonts/'], // into array of folders
-
-		// watcher
-		watchCSS: './public/_src/scss/**/*.scss',
-		watchJS: './public/_src/js/**/*.js',
-		watchIMG: './public/_src/img/**',
-		watchPHP: './public/**/*.{php,html}',
-
-		// wordpress specific
+		images: './public/_src/img/**',
 		wpStylesheet: './public/style.css',
+
+		// copy tasks => destination : source
+		copy: { './public/assets/fonts': ['./public/_src/fonts/**/*'] },
+		vendorFiles: { './public/_src/js/vendor/': ['./node_modules/qcss/js/qcss.js'] },
+		clear: ['./public/assets/**'],
+	},
+
+	// watcher paths
+	watch: {
+		css: './public/_src/scss/**/*.scss',
+		js: './public/_src/js/**/*.js',
+		images: './public/_src/img/**',
+		php: './public/**/*.{php,html}',
 	},
 
 	// browsersync options, is used as is
 	browserSync: {
-		proxy: 'http://your-domain.localhost', // use a proxy
+		proxy: 'https://your-domain.localhost', // use a proxy
 		// server: './public', // path to files
 		port: 3000,
 		open: false,
@@ -59,6 +58,20 @@ module.exports = {
 		watchOptions: {
 			debounceDelay: 1000, // This introduces a small delay when watching for file change events to avoid triggering too many reloads
 		},
+	},
+
+	// vinyl-ftp options @source https://www.npmjs.com/package/vinyl-ftp
+	ftpOptions: {
+		cwd: './public/',
+		base: './public/',
+		buffer: false,
+	},
+
+	// different deployment tasks, eg. gulp ftp:assets
+	deploy: {
+		// remote : local
+		default: { '/remote/folder/': ['**/*', '!_src', '!_src/**/*'] },
+		assets: { '/remote/folder/': ['assets/**/*.*'] },
 	},
 
 	// more options

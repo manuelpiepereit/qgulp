@@ -2,9 +2,10 @@
  * Some helper functions
  *
  * @package QGulp
- * @version 0.1.0
+ * @version 0.2.0
  */
 
+const fs = require('fs');
 const dateformat = require('dateformat');
 const changeCase = require('change-case');
 
@@ -18,12 +19,12 @@ module.exports = {
 		].join('\n');
 	},
 
-	// changes hyphenated and lowercase file names
+	// changes to hyphenated and lowercase file names
 	// @source https://stackoverflow.com/questions/36195036/changing-output-directories-files-to-lowercase-in-gulp
 	sanitizeFilename: path => {
-		path.dirname = path.dirname;
+		// path.dirname = path.dirname;
 		path.basename = path.extname == '' ? path.basename : changeCase.paramCase(path.basename);
-		path.extname = path.extname == '' ? path.extname : '.' + changeCase.paramCase(path.extname);
+		path.extname = path.extname == '' ? path.extname : changeCase.lowerCase(path.extname);
 		return path;
 	},
 
@@ -36,4 +37,6 @@ module.exports = {
 	getBuildMode: config => {
 		return config.useMinOnlyOnBuild;
 	},
+
+	fileExists: file => fs.existsSync(file),
 };

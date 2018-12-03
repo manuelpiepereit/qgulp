@@ -3,7 +3,7 @@
  * compiles sass, prefix, sourcempas, minifies
  *
  * @package QGulp
- * @version 0.1.0
+ * @version 0.2.0
  */
 
 const plumber = require('gulp-plumber');
@@ -27,8 +27,8 @@ const errorHandler = r => {
 
 module.exports = function(gulp, config, banner, useMinOnlyOnBuild) {
 	return () => {
-		let src = config.paths.srcCSS;
-		let dest = config.paths.destCSS;
+		let dest = config.paths.dist + '/css';
+		let src = config.paths.css;
 
 		let postcssPlugins = [autoprefixer({ browsers: [config.browserList] })];
 		let postcssPluginsMin = [cssnano()];
@@ -75,7 +75,14 @@ const dev = function(gulp, config, banner, src, dest, postcssPlugins, postcssPlu
 		.src(src, { allowEmpty: true })
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(sass({ errLogToConsole: true, outputStyle: config.cssOutputStyle, precision: 10 }))
+		.pipe(
+			sass({
+				includePaths: ['node_modules'],
+				errLogToConsole: true,
+				outputStyle: config.cssOutputStyle,
+				precision: config.cssPrecistion,
+			})
+		)
 		.on('error', sass.logError)
 		.pipe(postcss(postcssPlugins))
 		.pipe(header(banner))
@@ -90,7 +97,14 @@ const distOnly = function(gulp, config, banner, src, dest, postcssPlugins, postc
 	return gulp
 		.src(src, { allowEmpty: true })
 		.pipe(plumber(errorHandler))
-		.pipe(sass({ errLogToConsole: true, outputStyle: config.cssOutputStyle, precision: 10 }))
+		.pipe(
+			sass({
+				includePaths: ['node_modules'],
+				errLogToConsole: true,
+				outputStyle: config.cssOutputStyle,
+				precision: config.cssPrecistion,
+			})
+		)
 		.on('error', sass.logError)
 		.pipe(postcss(postcssPlugins))
 		.pipe(header(banner))
