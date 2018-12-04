@@ -1,7 +1,7 @@
 {
 	"name": "qgulp",
 	"description": "A gulp based build process for wordpress",
-	"version": "0.3.0",
+	"version": "0.3.1",
 	"author": "Neonpastell GmbH <multimedia@neonpastell.com> (http://www.neonpastell.com/)",
 	"license": "MIT",
 	"repository": {

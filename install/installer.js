@@ -2,7 +2,7 @@
  * Installs QGulp via npx
  *
  * @package QGulp
- * @version 0.1.1
+ * @version 0.3.1
  */
 const fs = require('fs');
 const cwd = process.cwd();
@@ -20,11 +20,20 @@ module.exports = () => {
 		'eslintignore',
 		'eslintrc.js',
 		'gitignore',
-		'qgulprc.js',
 		'gulpfile.babel.js',
 		'package.json',
+		'qgulprc-ftp-sample.js',
+		'qgulprc-sample.js',
 	];
-	const dotFiles = ['babelrc', 'editorconfig', 'eslintignore', 'eslintrc.js', 'gitignore', 'qgulprc.js'];
+	const dotFiles = [
+		'babelrc',
+		'editorconfig',
+		'eslintignore',
+		'eslintrc.js',
+		'gitignore',
+		'qgulprc-ftp-sample.js',
+		'qgulprc-sample.js',
+	];
 
 	spinner.start(`\x1b[2m1.\x1b[0m Copying config files ➜ \x1b[1m${cwd}\x1b[0m`);
 	let configFilesOutput = '';

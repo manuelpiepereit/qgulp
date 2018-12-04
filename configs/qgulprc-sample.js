@@ -78,5 +78,5 @@ module.exports = {
 	useMinOnlyOnBuild: false, // use only minified files when building distribution files
 	isWordpressTheme: true,
 
-	qgulpVersion: '0.3.0', // don't change this. is needed to check for outdated config files
+	qgulpVersion: '0.3.1', // don't change this. is needed to check for outdated config files
 };

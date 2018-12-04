@@ -12,13 +12,13 @@ A gulp based build process for wordpress
 
 ## Configuration
 
-#### gulprc.js
+#### .qgulprc.js
 
   * edit paths for distribution, source, and watch files
   * the `copy` and `vendorFiles` objects are set as key (destination) : value (source) pairs
   * optional edit `browserSync` object and `useBrowsersync` to setup browsersync as default watcher
   * `useMinOnlyOnBuild` won't create extra `.min` files on production.
-  * edit `ftpOptions` and the `gulprc-ftp.js` to setup deployment via ftp
+  * edit `ftpOptions` and the `.qgulprc-ftp.js` to setup deployment via ftp
   * edit the `deploy` object to setup paths for deployment. You can add more detailed deployment tasks by simply adding a new object. eg: `theme: { '/remote/path/to/theme': ['local/path/to/theme/**/*.*'] }`
   * change `isWordpressTheme` to false if you are not developing a Wordpress Theme
 
