@@ -2,10 +2,11 @@
  * Defines Gulp tasks
  *
  * @package QGulp
- * @version 0.2.0
+ * @version 0.3.0
  */
 
 const AppRootDir = require('app-root-dir').get();
+const semver = require('semver');
 const tools = require('./tasks/tools');
 
 // tasks
@@ -23,16 +24,26 @@ const ftp = require('./tasks/task-ftp');
 
 // get config files
 const pkg = require(AppRootDir + '/package.json');
-const config = require(AppRootDir + '/gulprc.js');
-const configFTP = require(AppRootDir + '/gulprc-ftp.js');
+const config = require(AppRootDir + '/.qgulprc.js');
+const configFTP = require(AppRootDir + '/.qgulprc-ftp.js');
+const qgulpVersion = require('./package.json').version;
 
 // main function
 const qgulp = gulp => {
 	if (!gulp) return false;
 
+	// show info if config is outdated
+	if (semver.satisfies(config.qgulpVersion, '<0.3.0')) {
+		console.log(
+			`\n\n\x1b[31m  There is a newer version of QGulp installed (${qgulpVersion}). \n  Your config file is outdated (${
+				config.qgulpVersion
+			}) and could use some updates. \x1b[0m\n`
+		);
+	}
+
 	// start workflow
 	console.log(
-		'\n\n\n \x1b[33m ---------- starting qgulp workflow for \x1b[1m%s\x1b[0m\x1b[33m v%s ---------- \x1b[0m\n\n',
+		'\n\n \x1b[33m ---------- starting qgulp workflow for \x1b[1m%s\x1b[0m\x1b[33m v%s ---------- \x1b[0m\n',
 		pkg.name,
 		pkg.version
 	);

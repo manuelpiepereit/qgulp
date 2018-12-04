@@ -28,9 +28,9 @@ bower_components
 *.env
 
 # qgulp-files
-gulprc-ftp-sample.js
-gulprc-ftp.js
-gulprc-sample.js
+.qgulprc-ftp-sample.js
+.qgulprc-ftp.js
+.qgulprc-sample.js
 
 
 # project files

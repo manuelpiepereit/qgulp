@@ -1,8 +1,6 @@
 /**
  * Running gulp tasks from qgulp
- *
  * @package QGulp
- * @version 0.2.0
+ * @version 0.3.0
  */
-const gulp = require('gulp');
-require('qgulp')(gulp);
+require('qgulp')(require('gulp'));

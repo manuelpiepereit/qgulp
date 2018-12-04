@@ -2,12 +2,7 @@
  * The main QGulp config file
  *
  * @package QGulp
- * @version 0.2.0
- *
- * main tasks
- * 1. gulp
- * 2. gulp bump[:patch|:minor|:major]
- * 3. gulp build
+ * @version 0.3.0
  */
 
 module.exports = {
@@ -67,11 +62,11 @@ module.exports = {
 		buffer: false,
 	},
 
-	// different deployment tasks, eg. gulp ftp:assets
+	// different deployment tasks, run with gulp ftp:all
 	deploy: {
 		// remote : local
 		default: { '/remote/folder/': ['**/*', '!_src', '!_src/**/*'] },
-		assets: { '/remote/folder/': ['assets/**/*.*'] },
+		theme: { '/remote/folder/': ['themes/**/*.*'] },
 	},
 
 	// more options
@@ -82,4 +77,6 @@ module.exports = {
 	useBrowsersync: false, // use browsersync or livereload as watch task
 	useMinOnlyOnBuild: false, // use only minified files when building distribution files
 	isWordpressTheme: true,
+
+	qgulpVersion: '0.3.0', // don't change this. is needed to check for outdated config files
 };
