@@ -2,7 +2,7 @@
  * Defines Gulp tasks
  *
  * @package QGulp
- * @version 0.3.0
+ * @version 0.4.0
  */
 
 const AppRootDir = require('app-root-dir').get();
@@ -13,11 +13,12 @@ const tools = require('./tasks/tools');
 const styles = require('./tasks/task-styles');
 const stylesWP = require('./tasks/task-styles-wp');
 const scripts = require('./tasks/task-scripts');
+const scriptsVendor = require('./tasks/task-scripts-vendor');
 const images = require('./tasks/task-images');
 const clear = require('./tasks/task-clear');
 const bump = require('./tasks/task-bump');
-const livereload = require('./tasks/task-livereload');
-const browsersync = require('./tasks/task-browsersync');
+const livereload = require('./tasks/task-watch-livereload');
+const browsersync = require('./tasks/task-watch-browsersync');
 const copy = require('./tasks/task-copy');
 const copyVendor = require('./tasks/task-copy-vendor');
 const ftp = require('./tasks/task-ftp');
@@ -32,8 +33,11 @@ const qgulpVersion = require('./package.json').version;
 const qgulp = gulp => {
 	if (!gulp) return false;
 
+	// set environment
+	const env = tools.isProduction() ? 'production' : tools.getEnv();
+
 	// show info if config is outdated
-	if (semver.satisfies(config.qgulpVersion, '<0.3.0')) {
+	if (semver.satisfies(config.qgulpVersion, '<0.4.0')) {
 		console.log(
 			`\n\n\x1b[31m  There is a newer version of QGulp installed (${qgulpVersion}). \n  Your config file is outdated (${
 				config.qgulpVersion
@@ -43,23 +47,26 @@ const qgulp = gulp => {
 
 	// start workflow
 	console.log(
-		'\n\n \x1b[33m ---------- starting qgulp workflow for \x1b[1m%s\x1b[0m\x1b[33m v%s ---------- \x1b[0m\n',
+		'\n\n \x1b[33m ---------- starting qgulp workflow for \x1b[1m%s\x1b[0m\x1b[33m v%s ---------- \x1b[0m\n \x1b[33m ---------- environment: \x1b[1m%s\x1b[0m\n',
 		pkg.name,
-		pkg.version
+		pkg.version,
+		env
 	);
 
 	// define tasks
-	gulp.task('css', styles(gulp, config, tools.banner(config, pkg), false));
-	gulp.task('js', scripts(gulp, config, tools.banner(config, pkg), false));
-	gulp.task('css:build', styles(gulp, config, tools.banner(config, pkg), tools.getBuildMode(config)));
-	gulp.task('js:build', scripts(gulp, config, tools.banner(config, pkg), tools.getBuildMode(config)));
-	gulp.task('images', images(gulp, config));
 	gulp.task('clear', clear(gulp, config));
-	gulp.task('copy', copy(gulp, config));
+	gulp.task('css', styles(gulp, config, tools.banner(config, pkg), env));
 	gulp.task('css:wp', stylesWP(gulp, config, pkg));
-	gulp.task('copy-vendor', copyVendor(gulp, config));
+	gulp.task('js', scripts(gulp, config, tools.banner(config, pkg), env));
+	gulp.task('js:vendor', scriptsVendor(gulp, config, tools.banner(config, pkg), env));
+	gulp.task('images', images(gulp, config));
+	gulp.task('copy', copy(gulp, config));
+
+	// additional tasks
+	gulp.task('copy:vendor', copyVendor(gulp, config));
 	gulp.task('ftp', ftp(gulp, config, configFTP, 'default'));
-	Object.keys(config.deploy).map(function(key, index) {
+	Object.keys(config.deployTasks).map(function(key, index) {
+		// creates dynamic ftp tasks
 		gulp.task('ftp:' + key, ftp(gulp, config, configFTP, key));
 	});
 
@@ -69,9 +76,9 @@ const qgulp = gulp => {
 	gulp.task('watch', gulp.series('watch:' + tools.getDefaultWatcher(config)));
 
 	// build tasks
-	gulp.task('dev', gulp.series('clear', gulp.parallel('css:wp', 'css', 'js', 'images', 'copy'))); // build development files
-	gulp.task('dist', gulp.series('clear', gulp.parallel('css:wp', 'css:build', 'js:build', 'images', 'copy'))); // build distribution files
-	gulp.task('build', gulp.series('dist')); // alias for dist
+	gulp.task('dev', gulp.series('clear', gulp.parallel('css:wp', 'css', 'js:vendor', 'js', 'images', 'copy'))); // build development files
+	gulp.task('dist', gulp.series('dev')); // build production files
+	gulp.task('build', gulp.series('dev')); // alias for dist
 
 	// version bumps
 	gulp.task('bump:patch', bump(gulp, AppRootDir + '/package.json', 'patch'));

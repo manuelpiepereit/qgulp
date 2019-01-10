@@ -10,7 +10,7 @@ const browserSync = require('browser-sync').create();
 
 module.exports = function(gulp, config) {
 	const bsInit = done => {
-		browserSync.init(config.browserSync);
+		browserSync.init(config.pluginOptions.browserSync);
 		done();
 	};
 

@@ -18,9 +18,10 @@ A gulp based build process for wordpress
   * the `copy` and `vendorFiles` objects are set as key (destination) : value (source) pairs
   * optional edit `browserSync` object and `useBrowsersync` to setup browsersync as default watcher
   * `useMinOnlyOnBuild` won't create extra `.min` files on production.
-  * edit `ftpOptions` and the `.qgulprc-ftp.js` to setup deployment via ftp
-  * edit the `deploy` object to setup paths for deployment. You can add more detailed deployment tasks by simply adding a new object. eg: `theme: { '/remote/path/to/theme': ['local/path/to/theme/**/*.*'] }`
   * change `isWordpressTheme` to false if you are not developing a Wordpress Theme
+  * edit `ftpOptions` and the `.qgulprc-ftp.js` to setup deployment via ftp
+  * edit the `deployDestination` object to set remote paths for different environments
+  * edit `deployTasks` to set detailed deployment tasks. Simply add a new object. eg: `theme: { '/remote/path/to/theme': ['local/path/to/theme/**/*.*'] }`
 
 #### gulpfile.babel.js
 
@@ -44,15 +45,14 @@ Otherwise use the following gulp tasks directly.
   * `gulp` the default task, runs `dev` and then `watch`
 
 #### core gulp tasks
-  * `gulp css` compiles scss files for development
-  * `gulp js` compiles js files for development
-  * `gulp css:build` compiles scss files for production
-  * `gulp js:build` compiles js files for production
-  * `gulp images` processes image files for production
   * `gulp clear` removes processed files to start fresh
-  * `gulp copy` copies files without processing to distribution folder
+  * `gulp css` compiles scss files for development
   * `gulp css:wp` changes version in Wordpress stylesheet style.css
-  * `gulp copy-vendor` copies files from vendor folders to source folder. Use this to fetch vendor files, for example from npm packages, to use in your source files.
+  * `gulp js` compiles js files for development
+  * `gulp js:vendor` compiles js vendor files for production
+  * `gulp images` processes image files for production
+  * `gulp copy` copies files without processing to distribution folder
+  * `gulp copy:vendor` copies files from vendor folders to source folder. Use this to fetch vendor files, for example from npm packages, to use in your source files.
 
 #### watchers
   * `gulp watch:livereload` starts watching with livereload
@@ -65,8 +65,9 @@ Otherwise use the following gulp tasks directly.
   * `gulp bump:major` major version update in package.json
   * `gulp bump` alias for `gulp bump:patch`
   * `gulp dev` compiles files in development mode
-  * `gulp dist` compiles files for production
-  * `gulp build` alias for `gulp dist`
+  * `gulp dev --production` compiles files for production
+  * `gulp dist` alias for `gulp dev --production`
+  * `gulp build` alias for `gulp dev --production`
 
 #### deployment
   * `gulp ftp` deploy files to preview server
@@ -80,6 +81,12 @@ Distribution files are bundled in subfolders: `img`, `css` and `js` for their re
 
 
 ## Changelog
+
+### 0.4.0
+  * added js:vendor as seperate task and packaged file
+  * added production environment
+  * changed some gulp task names
+  * changed config
 
 ### 0.3.0
   * added readme

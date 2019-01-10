@@ -3,7 +3,7 @@
  * compiles sass, prefix, sourcempas, minifies
  *
  * @package QGulp
- * @version 0.2.0
+ * @version 0.4.0
  */
 
 const plumber = require('gulp-plumber');
@@ -25,48 +25,24 @@ const errorHandler = r => {
 	notify.onError('ERROR: <%= error.message %>')(r);
 };
 
-module.exports = function(gulp, config, banner, useMinOnlyOnBuild) {
+module.exports = function(gulp, config, banner, env) {
 	return () => {
 		let dest = config.paths.dist + '/css';
 		let src = config.paths.css;
 
-		let postcssPlugins = [autoprefixer({ browsers: [config.browserList] })];
+		let postcssPlugins = [autoprefixer(config.pluginOptions.autoprefixer)];
 		let postcssPluginsMin = [cssnano()];
 
-		if (useMinOnlyOnBuild) {
-			return distOnly(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin);
+		if (env === 'production') {
+			if (config.useMinOnlyOnBuild) {
+				return dist(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin);
+			}
+			return both(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin);
 		}
 
-		return both(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin);
+		// build dev files
+		return dev(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin);
 	};
-};
-
-// writes css files and sourcemaps and seperate minified vesions *.min.css
-const both = function(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin) {
-	return gulp
-		.src(src, { allowEmpty: true })
-		.pipe(plumber(errorHandler))
-		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(
-			sass({
-				includePaths: ['node_modules'],
-				errLogToConsole: true,
-				outputStyle: config.cssOutputStyle,
-				precision: config.cssPrecistion,
-			})
-		)
-		.on('error', sass.logError)
-		.pipe(postcss(postcssPlugins))
-		.pipe(header(banner))
-		.pipe(sourcemaps.write('.'))
-		.pipe(gulp.dest(dest))
-		.pipe(filter('**/*.css'))
-		.pipe(rename({ suffix: '.min' }))
-		.pipe(postcss(postcssPluginsMin))
-		.pipe(header(banner))
-		.pipe(gulp.dest(dest))
-		.pipe(livereload())
-		.pipe(notify({ message: 'styles ready', onLast: true }));
 };
 
 // writes css files with sourcemaps
@@ -75,14 +51,7 @@ const dev = function(gulp, config, banner, src, dest, postcssPlugins, postcssPlu
 		.src(src, { allowEmpty: true })
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(
-			sass({
-				includePaths: ['node_modules'],
-				errLogToConsole: true,
-				outputStyle: config.cssOutputStyle,
-				precision: config.cssPrecistion,
-			})
-		)
+		.pipe(sass(config.pluginOptions.sass))
 		.on('error', sass.logError)
 		.pipe(postcss(postcssPlugins))
 		.pipe(header(banner))
@@ -93,21 +62,35 @@ const dev = function(gulp, config, banner, src, dest, postcssPlugins, postcssPlu
 };
 
 // writes minfied css files without sourcemaps
-const distOnly = function(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin) {
+const dist = function(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin) {
 	return gulp
 		.src(src, { allowEmpty: true })
 		.pipe(plumber(errorHandler))
-		.pipe(
-			sass({
-				includePaths: ['node_modules'],
-				errLogToConsole: true,
-				outputStyle: config.cssOutputStyle,
-				precision: config.cssPrecistion,
-			})
-		)
+		.pipe(sass(config.pluginOptions.sass))
 		.on('error', sass.logError)
 		.pipe(postcss(postcssPlugins))
 		.pipe(header(banner))
+		.pipe(postcss(postcssPluginsMin))
+		.pipe(header(banner))
+		.pipe(gulp.dest(dest))
+		.pipe(livereload())
+		.pipe(notify({ message: 'styles ready', onLast: true }));
+};
+
+// writes css files and sourcemaps and seperate minified vesions *.min.css
+const both = function(gulp, config, banner, src, dest, postcssPlugins, postcssPluginsMin) {
+	return gulp
+		.src(src, { allowEmpty: true })
+		.pipe(plumber(errorHandler))
+		.pipe(sourcemaps.init({ loadMaps: true }))
+		.pipe(sass(config.pluginOptions.sass))
+		.on('error', sass.logError)
+		.pipe(postcss(postcssPlugins))
+		.pipe(header(banner))
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest(dest))
+		.pipe(filter('**/*.css'))
+		.pipe(rename({ suffix: '.min' }))
 		.pipe(postcss(postcssPluginsMin))
 		.pipe(header(banner))
 		.pipe(gulp.dest(dest))

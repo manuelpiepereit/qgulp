@@ -3,7 +3,7 @@
  * minifies and optimizes images anc svgs
  *
  * @package QGulp
- * @version 0.2.0
+ * @version 0.4.0
  */
 
 const plumber = require('gulp-plumber');
@@ -30,10 +30,10 @@ module.exports = function(gulp, config) {
 			.pipe(plumber(errorHandler))
 			.pipe(
 				imagemin([
-					imagemin.gifsicle({ interlaced: true }),
-					imagemin.jpegtran({ progressive: true }),
-					imagemin.optipng({ optimizationLevel: 3 }), // 0-7 low-high
-					imagemin.svgo({ plugins: [{ removeViewBox: true }, { cleanupIDs: false }] }),
+					imagemin.gifsicle(config.pluginOptions.imagemin.gifsicle),
+					imagemin.jpegtran(config.pluginOptions.imagemin.jpegtran),
+					imagemin.optipng(config.pluginOptions.imagemin.optipng),
+					imagemin.svgo(config.pluginOptions.imagemin.svgo),
 				])
 			)
 			.pipe(imagemin(pngquant()))

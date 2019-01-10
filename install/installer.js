@@ -2,7 +2,7 @@
  * Installs QGulp via npx
  *
  * @package QGulp
- * @version 0.3.1
+ * @version 0.4.0
  */
 const fs = require('fs');
 const cwd = process.cwd();

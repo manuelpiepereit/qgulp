@@ -3,14 +3,14 @@
  * copies files from node_modules to vendor dir for further processing
  *
  * @package QGulp
- * @version 0.1.1
+ * @version 0.4
  */
 
 const tools = require('./tools');
 
 module.exports = function(gulp, config) {
 	return done => {
-		let dirs = config.paths.vendorFiles;
+		let dirs = config.paths.copyVendor;
 
 		Object.keys(dirs).map(function(key, index) {
 			var src = dirs[key];

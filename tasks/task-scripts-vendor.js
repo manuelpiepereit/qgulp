@@ -1,5 +1,5 @@
 /**
- * task: scripts
+ * task: scripts vendor
  * concats and minifies js, writes sourcemaps
  *
  * @package QGulp
@@ -12,13 +12,11 @@ const header = require('gulp-header');
 const filter = require('gulp-filter');
 const rename = require('gulp-rename');
 const livereload = require('gulp-livereload');
-const gulpif = require('gulp-if');
 
 // plugins for scripts
 const sourcemaps = require('gulp-sourcemaps');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
-const babel = require('gulp-babel');
 
 // global error handler
 const errorHandler = r => {
@@ -28,7 +26,7 @@ const errorHandler = r => {
 module.exports = function(gulp, config, banner, env) {
 	return () => {
 		let dest = config.paths.dist + '/js';
-		let src = config.paths.js;
+		let src = config.paths.jsVendor;
 
 		// build production files
 		if (env === 'production') {
@@ -49,13 +47,12 @@ const dev = function(gulp, config, banner, src, dest) {
 		.src(src)
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(gulpif(config.useBabel, babel(config.pluginOptions.babel)))
-		.pipe(concat(config.jsDistFilename))
+		.pipe(concat(config.jsVendorDistFilename))
 		.pipe(header(banner))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dest))
 		.pipe(livereload())
-		.pipe(notify({ message: 'scripts ready', onLast: true }));
+		.pipe(notify({ message: 'vendor scripts ready', onLast: true }));
 };
 
 // writes uglified js file
@@ -63,13 +60,12 @@ const dist = function(gulp, config, banner, src, dest) {
 	return gulp
 		.src(src)
 		.pipe(plumber(errorHandler))
-		.pipe(gulpif(config.useBabel, babel(config.pluginOptions.babel)))
-		.pipe(concat(config.jsDistFilename))
+		.pipe(concat(config.jsVendorDistFilename))
 		.pipe(uglify())
 		.pipe(header(banner))
 		.pipe(gulp.dest(dest))
 		.pipe(livereload())
-		.pipe(notify({ message: 'scripts ready', onLast: true }));
+		.pipe(notify({ message: 'vendor scripts ready', onLast: true }));
 };
 
 // writes js and sourcemap files and a seperate *.min.js file
@@ -78,8 +74,7 @@ const both = function(gulp, config, banner, src, dest) {
 		.src(src)
 		.pipe(plumber(errorHandler))
 		.pipe(sourcemaps.init({ loadMaps: true }))
-		.pipe(gulpif(config.useBabel, babel(config.pluginOptions.babel)))
-		.pipe(concat(config.jsDistFilename))
+		.pipe(concat(config.jsVendorDistFilename))
 		.pipe(header(banner))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest(dest))
@@ -89,5 +84,5 @@ const both = function(gulp, config, banner, src, dest) {
 		.pipe(header(banner))
 		.pipe(gulp.dest(dest))
 		.pipe(livereload())
-		.pipe(notify({ message: 'scripts ready', onLast: true }));
+		.pipe(notify({ message: 'vendor scripts ready', onLast: true }));
 };

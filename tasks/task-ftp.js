@@ -6,7 +6,7 @@
  * @example gulp ftp:theme --production
  *
  * @package QGulp
- * @version 0.2.0
+ * @version 0.4.0
  * @todo to implement
  */
 
@@ -18,15 +18,20 @@ module.exports = function(gulp, config, configFTP, task) {
 	return () => {
 		// set environment
 		const env = argv.production === undefined ? 'preview' : 'production';
+
+		// set paths
+		let remote = config.deployDestination[env];
+		let local = config.deployTasks[task];
+
 		// setup ftp connection with log
 		const credentials = configFTP[env];
 		credentials.log = gutil.log;
 		const conn = ftp.create(credentials);
 
 		// setup local and remote paths
-		deployPaths = config.deploy[task];
-		const remote = Object.keys(deployPaths)[0];
-		const local = deployPaths[remote];
+		// deployPaths = config.deploy[task];
+		// const remote = Object.keys(deployPaths)[0];
+		// const local = deployPaths[remote];
 
 		console.log(
 			'\n\x1b[33m :: deploying \x1b[1m%s\x1b[0m\x1b[33m to \x1b[1m%s\x1b[0m\x1b[33m via ftp in... \x1b[0m',
